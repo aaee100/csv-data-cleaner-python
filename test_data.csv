@@ -1,0 +1,21 @@
+name,email,purchase_amount
+john smith, JOHN.SMITH@EMAIL.COM ,45.50
+  mary johnson ,mary.johnson@email.com,120.00
+DAVID BROWN,david.brown@email.com,75.25
+sarah wilson,SARAH.WILSON@EMAIL.COM,89.99
+michael davis,michael.davis@email.com,150
+james miller,james.miller@email.com,42.75
+linda wilson,linda.wilson@email.com,65.00
+robert moore,robert.moore@email.com,210.50
+patricia taylor,patricia.taylor@email.com,35.99
+charles anderson,charles.anderson@email.com,99.95
+barbara thomas,barbara.thomas@email.com,55.50
+daniel jackson,daniel.jackson@email.com,80.00
+jennifer white,jennifer.white@email.com,125.75
+invalid email,not-an-email,50.00
+missing email,,75.00
+wrong format,user@,30.00
+steven harris,steven.harris@email.com,invalid
+karen martin,karen.martin@email.com,95.50
+brian thompson,brian.thompson@email.com,60.25
+lisa garcia,lisa.garcia@email.com,110.00
