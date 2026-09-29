@@ -16,14 +16,6 @@ The application removes unnecessary spaces, standardizes names and email address
 
 ![Main Window](screenshots/main-window.png)
 
-### File Selected
-
-![File Selected](screenshots/selected-file.png)
-
-### Cleaned Result
-
-![Cleaned Result](screenshots/cleaned-result.png)
-
 ## Features
 
 * Select a CSV file using a file browser.
