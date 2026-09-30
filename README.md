@@ -55,12 +55,9 @@ pip install -r requirements.txt
 csv-data-cleaner-python/
 ├── csv_data_cleaner.py
 ├── data/
-│   ├── test_data.csv
-│   └── cleaned_data.csv
+│   └── test_data.csv
 ├── screenshots/
-│   ├── main-window.png
-│   ├── selected-file.png
-│   └── cleaned-result.png
+│   └── main-window.png
 ├── requirements.txt
 ├── .gitignore
 └── README.md
