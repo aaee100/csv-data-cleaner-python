@@ -8,7 +8,7 @@
 
 CSV Data Cleaner is a desktop application built with **Python**, **Tkinter**, and **Pandas** for cleaning and standardizing CSV files.
 
-The application removes unnecessary spaces, standardizes names and email addresses, removes rows with invalid or missing email addresses, and converts invalid purchase amounts to zero. Cleaned data is saved as a new CSV file.
+The application removes unnecessary spaces, standardizes names and email addresses, removes rows with not valid or missing email addresses, and converts not valid purchase amounts to zero. Cleaned data is saved as a new CSV file.
 
 ## Screenshots
 
@@ -31,9 +31,9 @@ The application removes unnecessary spaces, standardizes names and email address
 * Standardize name capitalization.
 * Convert email addresses to lowercase.
 * Validate email addresses.
-* Remove rows with invalid or missing emails.
+* Remove rows with not valid or missing emails.
 * Convert purchase amounts to numeric values.
-* Replace invalid purchase amounts with `0`.
+* Replace not valid purchase amounts with `0`.
 * Save cleaned data as a new CSV file.
 * Display a cleaning summary after processing.
 * Store test and output files locally.
@@ -70,7 +70,8 @@ csv-data-cleaner-python/
 │   └── cleaned-result.png
 ├── requirements.txt
 ├── .gitignore
-└── README.md
+├── README.md
+└── project-writeup.md
 ```
 
 ## Installation
@@ -101,9 +102,9 @@ The test data contains examples of:
 * Extra spaces
 * Different name capitalization
 * Uppercase email addresses
-* Invalid email addresses
+* Not valid email addresses
 * Missing email addresses
-* Invalid purchase amounts
+* Not valid purchase amounts
 * Valid purchase amounts
 
 This allows the cleaning functionality to be tested easily.
