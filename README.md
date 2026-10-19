@@ -15,6 +15,8 @@ The application removes unnecessary spaces, standardizes names and email address
 ### Main Window
 
 ![Main Window](screenshots/main-window.png)
+![Selected File](screenshots/selected-file.png)
+![Cleaned Result](screenshots/cleaned-result.png)
 
 ## Features
 
@@ -57,7 +59,9 @@ csv-data-cleaner-python/
 ├── data/
 │   └── test_data.csv
 ├── screenshots/
-│   └── main-window.png
+│   ├── main-window.png
+│   ├── selected-file.png
+│   └── cleaned-result.png
 ├── requirements.txt
 ├── .gitignore
 └── README.md
