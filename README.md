@@ -15,7 +15,13 @@ The application removes unnecessary spaces, standardizes names and email address
 ### Main Window
 
 ![Main Window](screenshots/main-window.png)
+
+### Selected File
+
 ![Selected File](screenshots/selected-file.png)
+
+### Cleaned Result
+
 ![Cleaned Result](screenshots/cleaned-result.png)
 
 ## Features
