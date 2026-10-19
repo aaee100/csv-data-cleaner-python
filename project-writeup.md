@@ -120,7 +120,8 @@ csv-data-cleaner-python/
 │   └── cleaned-result.png
 ├── requirements.txt
 ├── .gitignore
-└── README.md
+├── README.md
+└── project-writeup.md
 ```
 
 The main Python file contains the application logic. The `data` directory holds sample and generated files, while `screenshots` can contain images documenting the user interface.
