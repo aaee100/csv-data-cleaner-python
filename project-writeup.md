@@ -3,7 +3,7 @@
 
 ## Introduction
 
-CSV files are widely used to store and exchange structured data, but their contents are not always consistent. Names may have different capitalization, text fields may contain unnecessary spaces, email addresses may be incorrectly formatted, and numeric values may contain invalid data.
+CSV files are widely used to store and exchange structured data, but their contents are not always consistent. Names may have different capitalization, text fields may contain unnecessary spaces, email addresses may be incorrectly formatted, and numeric values may contain not valid data.
 
 To explore how these problems can be addressed with Python, I developed **CSV Data Cleaner**, a lightweight desktop application that automates several common data-cleaning tasks.
 
@@ -22,7 +22,7 @@ Its main features include:
 - Converting email addresses to lowercase.
 - Filtering out rows containing missing or incorrectly formatted email addresses.
 - Converting purchase amounts to numeric values.
-- Replacing invalid or missing purchase amounts with zero.
+- Replacing not valid or missing purchase amounts with zero.
 - Saving the cleaned data as a new CSV file.
 - Displaying a summary of the cleaning operation.
 
@@ -78,7 +78,7 @@ The `clean_csv()` function performs the main data-processing operations.
 
 First, Pandas reads the selected file into a DataFrame. The program then removes leading and trailing whitespace from string values throughout the dataset.
 
-If a `name` column exists, its values are converted to title case. If an `email` column exists, its values are converted to lowercase, and rows with missing or invalid email formats are removed.
+If a `name` column exists, its values are converted to title case. If an `email` column exists, its values are converted to lowercase, and rows with missing or not valid email formats are removed.
 
 The function also checks for a `purchase_amount` column. If present, its values are converted to numeric data. Values that cannot be converted are replaced with zero.
 
@@ -98,7 +98,7 @@ The interface is intentionally simple, keeping the main workflow accessible to u
 
 ### 5. Results and Error Messages
 
-After successful processing, the application displays a summary containing the original row count, the number of rows removed for invalid email formats, and the final number of rows saved.
+After successful processing, the application displays a summary containing the original row count, the number of rows removed for not valid email formats, and the final number of rows saved.
 
 If an exception occurs, an error dialog displays the corresponding error message.
 
@@ -167,7 +167,7 @@ The email validator checks formatting rather than actual deliverability. More de
 
 ### Safer handling of numeric values
 
-Invalid purchase amounts are currently replaced with zero. This is convenient for some datasets, but it can also misrepresent missing or malformed values. A future version could preserve missing values or let users choose how they should be handled.
+Not valid purchase amounts are currently replaced with zero. This is convenient for some datasets, but it can also misrepresent missing or malformed values. A future version could preserve missing values or let users choose how they should be handled.
 
 ### File-overwrite protection
 
