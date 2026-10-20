@@ -71,7 +71,7 @@ csv-data-cleaner-python/
 ├── requirements.txt
 ├── .gitignore
 ├── README.md
-└── project-writeup.md
+└── article.md
 ```
 
 ## Installation
