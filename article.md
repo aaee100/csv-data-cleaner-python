@@ -1,15 +1,14 @@
-
-# Building a CSV Data Cleaner with Python and AI Assistance
+# Building a CSV Data Cleaner with Python, Pandas, and Tkinter
 
 ## Introduction
 
-CSV files are widely used to store and exchange structured data, but their contents are not always consistent. Names may have different capitalization, text fields may contain unnecessary spaces, email addresses may be incorrectly formatted, and numeric values may contain not valid data.
+CSV files are widely used to store and exchange structured data, but their contents are not always consistent. Names may have different capitalization, text fields may contain unnecessary spaces, email addresses may be incorrectly formatted, and numeric values may contain invalid data.
 
 To explore how these problems can be addressed with Python, I developed **CSV Data Cleaner**, a lightweight desktop application that automates several common data-cleaning tasks.
 
 The application uses Python, Pandas, and Tkinter. It provides a graphical interface through which users can select a CSV file, clean its contents according to predefined rules, and save the processed data in a project-specific directory.
 
-**Most of the code was generated with AI assistance.** The project demonstrates how AI can help with application development while providing an opportunity to examine the generated code, understand its structure, and identify areas for future improvement.
+Most of the code was generated with AI assistance. The development process involved adapting the initial solution to new requirements, testing its behavior, and resolving a compatibility issue with newer versions of Pandas.
 
 ## Project Overview
 
@@ -22,13 +21,60 @@ Its main features include:
 - Converting email addresses to lowercase.
 - Filtering out rows containing missing or incorrectly formatted email addresses.
 - Converting purchase amounts to numeric values.
-- Replacing not valid or missing purchase amounts with zero.
+- Replacing invalid or missing purchase amounts with zero.
 - Saving the cleaned data as a new CSV file.
 - Displaying a summary of the cleaning operation.
 
 The application recognizes three specific column names: `name`, `email`, and `purchase_amount`. The corresponding cleaning rules are applied only when those columns exist.
 
 This makes the program suitable for simple, structured datasets that follow the expected column conventions.
+
+## Development Process
+
+The project began as a beginner-level Python task: create a script that could clean a customer CSV file containing inconsistent information.
+
+The original requirements were straightforward. The program needed to read a CSV file, remove unnecessary spaces, standardize names, convert email addresses to lowercase, remove rows with invalid or missing email addresses, and replace missing purchase amounts with zero.
+
+### From a command-line script to a desktop application
+
+The first implementation was a command-line script using Pandas. A sample customer dataset was created to test different situations, including extra spaces, inconsistent capitalization, invalid email formats, missing values, and purchase amounts that could not be converted to numbers.
+
+The initial version used command-line arguments to specify the input and output filenames. During development, this approach was changed to interactive input so users could enter the file paths themselves.
+
+Another requirement was introduced: the cleaned file should be saved automatically in the user's Downloads folder.
+
+The project then evolved into a graphical desktop application. Tkinter was introduced to provide a file-selection dialog, an output filename field, and a button to start the cleaning process. This removed the need for users to enter file paths manually in the terminal.
+
+### Organizing the application files
+
+As the application became more structured, the output location was changed again.
+
+Instead of saving files in the Downloads folder, the current version creates a `data` directory next to the Python script and saves cleaned CSV files there.
+
+This makes the output location predictable and keeps generated files associated with the project.
+
+### Testing and pandas compatibility
+
+Testing the application with a newer development environment revealed a compatibility problem.
+
+The original implementation used `DataFrame.applymap()` to remove leading and trailing spaces from string values. This method is no longer available in newer pandas versions, causing the application to display an error when the cleaning button was clicked.
+
+The solution was to replace `DataFrame.applymap()` with `Series.map()` applied individually to each column:
+
+```python
+for column in df.columns:
+    df[column] = df[column].map(
+        lambda value: value.strip()
+        if isinstance(value, str)
+        else value
+    )
+```
+
+This approach cleans string values without changing non-string values and avoids relying on the removed DataFrame method.
+
+The application was subsequently tested with Python 3.14.10 and Pandas 3.1.1 in PyCharm 2025.3.1.1.
+
+This testing process highlighted an important part of software development: code that works in one environment may need adjustments when libraries are updated.
 
 ## Technologies Used
 
@@ -64,7 +110,7 @@ At startup, the program determines the directory containing the Python script us
 
 It then creates a `data` directory if one does not already exist.
 
-Cleaned CSV files are saved in this directory. Keeping generated files alongside the project makes the output location predictable and helps keep the project organized.
+Cleaned CSV files are saved in this directory.
 
 ### 2. Email Validation
 
@@ -78,7 +124,7 @@ The `clean_csv()` function performs the main data-processing operations.
 
 First, Pandas reads the selected file into a DataFrame. The program then removes leading and trailing whitespace from string values throughout the dataset.
 
-If a `name` column exists, its values are converted to title case. If an `email` column exists, its values are converted to lowercase, and rows with missing or not valid email formats are removed.
+If a `name` column exists, its values are converted to title case. If an `email` column exists, its values are converted to lowercase, and rows with missing or invalid email formats are removed.
 
 The function also checks for a `purchase_amount` column. If present, its values are converted to numeric data. Values that cannot be converted are replaced with zero.
 
@@ -98,7 +144,7 @@ The interface is intentionally simple, keeping the main workflow accessible to u
 
 ### 5. Results and Error Messages
 
-After successful processing, the application displays a summary containing the original row count, the number of rows removed for not valid email formats, and the final number of rows saved.
+After successful processing, the application displays a summary containing the original row count, the number of rows removed for invalid email formats, and the final number of rows saved.
 
 If an exception occurs, an error dialog displays the corresponding error message.
 
@@ -112,30 +158,28 @@ The project uses a straightforward directory layout:
 csv-data-cleaner-python/
 ├── csv_data_cleaner.py
 ├── data/
-│   ├── test_data.csv
-│   └── cleaned_data.csv
+│   └── test_data.csv
 ├── screenshots/
 │   ├── main-window.png
 │   ├── selected-file.png
 │   └── cleaned-result.png
 ├── requirements.txt
 ├── .gitignore
-├── README.md
-└── project-writeup.md
+└── README.md
 ```
 
-The main Python file contains the application logic. The `data` directory holds sample and generated files, while `screenshots` can contain images documenting the user interface.
+The main Python file contains the application logic. The `data` directory holds sample and generated files, while `screenshots` contains images documenting the user interface.
 
-The `requirements.txt` file records the project's external dependencies, and the README explains installation, usage, and project features.
+Generated output files can be kept local rather than committed to the repository.
 
 ## Installation and Usage
 
 The application requires Python, Pandas, and a working Tkinter installation.
 
-Install Pandas with:
+Install the dependency with:
 
 ```bash
-pip install pandas
+pip install -r requirements.txt
 ```
 
 Save the source code as `csv_data_cleaner.py` and run:
@@ -149,7 +193,7 @@ When the application opens:
 1. Select a CSV file using **Browse**.
 2. Enter a name for the output file.
 3. Click **Clean CSV File**.
-4. Review the result message and locate the cleaned file in the `data` directory.
+4. Review the result message and locate the cleaned file in the project's `data` directory.
 
 The program is intended for CSV files whose structure is compatible with the predefined cleaning rules.
 
@@ -167,7 +211,7 @@ The email validator checks formatting rather than actual deliverability. More de
 
 ### Safer handling of numeric values
 
-Not valid purchase amounts are currently replaced with zero. This is convenient for some datasets, but it can also misrepresent missing or malformed values. A future version could preserve missing values or let users choose how they should be handled.
+Invalid purchase amounts are currently replaced with zero. This is convenient for some datasets, but it can also misrepresent missing or malformed values. A future version could preserve missing values or let users choose how they should be handled.
 
 ### File-overwrite protection
 
@@ -177,24 +221,24 @@ The application could check whether the requested output file already exists and
 
 Other possible improvements include duplicate-row detection, support for Excel files, a preview of the cleaned data, configurable cleaning rules, and more detailed statistics about the changes made.
 
-These improvements would make the application more flexible and suitable for a wider range of real-world datasets.
-
 ## AI-Assisted Development
 
 An important part of this project is the use of AI during development.
 
-Most of the code was generated with AI assistance, helping to produce an initial implementation of the data-processing functions, file handling, and graphical interface.
+Most of the code was generated with AI assistance. The initial implementation was gradually adapted as new requirements emerged, including interactive file selection, a graphical interface, local output storage, and compatibility with newer pandas versions.
 
-However, AI-generated code is not automatically correct or production-ready. Its behavior still needs to be understood and tested, particularly when handling malformed input, unexpected data types, and files containing information that must not be lost.
+The development process also demonstrated that AI-generated code is not automatically correct or production-ready. The `DataFrame.applymap()` compatibility issue was discovered through actual testing and required a code change.
 
-This project illustrates a practical approach to AI-assisted programming: using AI to accelerate implementation while treating the resulting code as something that must be evaluated and improved.
+This project illustrates a practical approach to AI-assisted programming: using AI to accelerate implementation while testing the resulting application, understanding its behavior, and improving it when problems arise.
 
 ## Conclusion
 
 CSV Data Cleaner is a small Python desktop application that automates common CSV-cleaning operations through a straightforward graphical interface.
 
+Its development began with a simple command-line task and evolved into a desktop application through several practical improvements.
+
 By combining Pandas for data processing, Tkinter for user interaction, regular expressions for basic email validation, and `pathlib` for file management, the project brings several useful programming concepts together in one practical tool.
 
-The project also provides a foundation for further development, including more flexible validation, safer file handling, and configurable cleaning operations.
+The project also demonstrates how testing and compatibility adjustments are important parts of software development, particularly when working with evolving libraries.
 
 Most of the code was created with AI assistance, making this project an example of how AI can support software development while leaving room for testing, learning, and continuous improvement.
