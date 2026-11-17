@@ -18,11 +18,16 @@ DATA_DIR.mkdir(exist_ok=True)
 # -------------------------
 def is_valid_email(email):
     """Check if an email address has a valid format."""
+
     if pd.isna(email):
         return False
 
     pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    return re.match(pattern, str(email).strip()) is not None
+
+    return re.match(
+        pattern,
+        str(email).strip()
+    ) is not None
 
 
 # -------------------------
@@ -33,8 +38,14 @@ def clean_csv(input_file, output_filename):
         # Read CSV file
         df = pd.read_csv(input_file)
 
-        # Strip spaces from all string columns
-        df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+        # Strip spaces from all string values
+        # Series.map() works with pandas 1.x, 2.x and 3.x
+        for column in df.columns:
+            df[column] = df[column].map(
+                lambda value: value.strip()
+                if isinstance(value, str)
+                else value
+            )
 
         # Fix name capitalization
         if 'name' in df.columns:
@@ -46,8 +57,11 @@ def clean_csv(input_file, output_filename):
 
             # Remove invalid or missing emails
             before_rows = len(df)
+
             df = df[df['email'].apply(is_valid_email)]
+
             removed = before_rows - len(df)
+
         else:
             before_rows = len(df)
             removed = 0
@@ -61,7 +75,11 @@ def clean_csv(input_file, output_filename):
 
         # Save cleaned file inside data folder
         output_path = DATA_DIR / output_filename
-        df.to_csv(output_path, index=False)
+
+        df.to_csv(
+            output_path,
+            index=False
+        )
 
         messagebox.showinfo(
             "Success",
@@ -116,6 +134,14 @@ def start_cleaning():
 
     if not output_filename.lower().endswith(".csv"):
         output_filename += ".csv"
+
+    # Prevent output paths outside the data folder
+    if Path(output_filename).name != output_filename:
+        messagebox.showerror(
+            "Error",
+            "Please enter a filename only, without a folder path."
+        )
+        return
 
     clean_csv(input_file, output_filename)
 
