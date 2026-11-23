@@ -137,7 +137,7 @@ The updated version was tested with:
 
 Read more about the development process, implementation, and technical decisions:
 
-[Building a CSV Data Cleaner with Python, Pandas, and Tkinter](../python-project-articles/articles/building-csv-data-cleaner-python-pandas.md)
+[Building a CSV Data Cleaner with Python, Pandas, and Tkinter](article.md)
 
 ## Future Improvements
 
